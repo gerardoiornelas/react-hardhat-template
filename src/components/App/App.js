@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, Button } from "@mui/material";
 import { ethers } from "ethers";
 
 // Components
 import { Navigation } from "../Navigation";
 import { Loading } from "../Loading";
+import { ColorPaletteGenerator } from "../ColorPaletteGenerator";
+import { WalletConnector } from "../WalletConnector";
 
 // ABIs: Import your contract ABIs here
 // import TOKEN_ABI from '../../abis/Token.json'
@@ -13,6 +15,7 @@ import { Loading } from "../Loading";
 // import config from '../../config.json';
 
 function App() {
+  const [open, setOpen] = useState(false);
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState(0);
 
@@ -36,6 +39,9 @@ function App() {
 
     setIsLoading(false);
   };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     if (isLoading) {
@@ -61,6 +67,15 @@ function App() {
             <Typography align="center">
               Edit App.js to add your code here.
             </Typography>
+            <Box p={3}>
+              <ColorPaletteGenerator />
+            </Box>
+            <Button onClick={handleOpen}>Wallet Connector</Button>
+            <WalletConnector
+              isOpen={open}
+              handleOpen={handleOpen}
+              handleClose={handleClose}
+            />
           </Box>
         </Container>
       )}
